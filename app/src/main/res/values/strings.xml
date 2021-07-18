@@ -21,4 +21,5 @@
     <string name="no">Ne</string>
     
     <string name="settingShowAppreciation">Ukazovat poděkování</string>
+    <string name="settingStopAllWhenGameStopped">Zastavit vše při zastavení hry</string>
 </resources>

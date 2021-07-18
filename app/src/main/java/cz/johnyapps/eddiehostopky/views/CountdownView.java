@@ -25,12 +25,7 @@ public class CountdownView extends StopwatchView {
             StopwatchState stopwatchState = getStopwatchState();
 
             if (stopwatchState.isRunning()) {
-                long seconds = stopwatchState.getRunningFor() / 1000;
-                long count = countFrom - seconds;
-
-                timeTextView.setText(String.format("%ss", count));
-
-                if (count > 0) {
+                if (drawFrame() > 0) {
                     getTimeHandler().postDelayed(this, 1000);
                 } else if (onCountdownCompleteListener != null) {
                     stopwatchState.startOrPause();
@@ -65,6 +60,20 @@ public class CountdownView extends StopwatchView {
         }
 
         timeTextView.setText(String.format("%ss", countFrom));
+    }
+
+    @Override
+    protected long drawFrame() {
+        StopwatchState stopwatchState = getStopwatchState();
+        if (stopwatchState != null) {
+            long seconds = stopwatchState.getRunningFor() / 1000;
+            long count = countFrom - seconds;
+
+            timeTextView.setText(String.format("%ss", count));
+            return count;
+        }
+
+        return countFrom;
     }
 
     @Override

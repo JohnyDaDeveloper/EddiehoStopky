@@ -5,67 +5,70 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 public class Logger {
+    @NonNull
+    private static final String PREFIX = "LOGGER: ";
+
     public static void v(@NonNull String TAG, @NonNull String message) {
-        Log.v(TAG, message);
+        Log.v(PREFIX + TAG, message);
     }
 
     public static void v(@NonNull String TAG, @NonNull String message, @NonNull Object... params) {
-        Log.v(TAG, String.format(message, params));
+        Log.v(PREFIX + TAG, String.format(message, params));
     }
 
     public static void d(@NonNull String TAG, @NonNull String message) {
-        Log.d(TAG, message);
+        Log.d(PREFIX + TAG, message);
     }
 
     public static void d(@NonNull String TAG, @NonNull String message, @NonNull Exception e) {
-        Log.d(TAG, message, e);
+        Log.d(PREFIX + TAG, message, e);
     }
 
     public static void d(@NonNull String TAG, @NonNull String message, @NonNull Object... params) {
-        Log.d(TAG, String.format(message, params));
+        Log.d(PREFIX + TAG, String.format(message, params));
     }
 
     public static void d(@NonNull String TAG, @NonNull String message, @NonNull Exception e, @NonNull Object... params) {
-        Log.d(TAG, String.format(message, params), e);
+        Log.d(PREFIX + TAG, String.format(message, params), e);
     }
 
     public static void i(@NonNull String TAG, @NonNull String message) {
-        Log.i(TAG, message);
+        Log.i(PREFIX + TAG, message);
     }
 
     public static void i(@NonNull String TAG, @NonNull String message, @NonNull Object... params) {
-        Log.i(TAG, String.format(message, params));
+        Log.i(PREFIX + TAG, String.format(message, params));
     }
 
     public static void w(@NonNull String TAG, @NonNull String message) {
-        Log.w(TAG, message);
+        Log.w(PREFIX + TAG, message);
     }
 
     public static void w(@NonNull String TAG, @NonNull String message, @NonNull Exception e) {
-        Log.w(TAG, message, e);
+        Log.w(PREFIX + TAG, message, e);
     }
 
     public static void w(@NonNull String TAG, @NonNull String message, @NonNull Object... params) {
-        Log.w(TAG, String.format(message, params));
+        Log.w(PREFIX + TAG, String.format(message, params));
     }
 
     public static void w(@NonNull String TAG, @NonNull String message, @NonNull Exception e, @NonNull Object... params) {
-        Log.w(TAG, String.format(message, params), e);
+        Log.w(PREFIX + TAG, String.format(message, params), e);
     }
 
     public static void e(@NonNull String TAG, @NonNull String message) {
-        Log.e(TAG, message);
+        Log.e(PREFIX + TAG, message);
     }
 
     public static void e(@NonNull String TAG, @NonNull String message, @NonNull Exception e) {
-        Log.e(TAG, message, e);
+        Log.e(PREFIX + TAG, message, e);
     }
 
     public static void e(@NonNull String TAG, @NonNull String message, @NonNull Object... params) {
-        Log.e(TAG, String.format(message, params));
+        Log.e(PREFIX + TAG, String.format(message, params));
     }
 
     public static void e(@NonNull String TAG, @NonNull String message, @NonNull Exception e, @NonNull Object... params) {
-        Log.e(TAG, String.format(message, params), e);
+        Log.e(PREFIX + TAG, String.format(message, params), e);
     }
 }

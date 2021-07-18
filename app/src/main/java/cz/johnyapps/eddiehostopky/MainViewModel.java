@@ -12,6 +12,8 @@ import java.util.List;
 
 import cz.johnyapps.eddiehostopky.settings.SettingItem;
 import cz.johnyapps.eddiehostopky.settings.SettingsFactory;
+import cz.johnyapps.eddiehostopky.settings.setting.BooleanSetting;
+import cz.johnyapps.eddiehostopky.tools.Logger;
 
 public class MainViewModel extends AndroidViewModel {
     @NonNull
@@ -102,6 +104,10 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public void setLastChangedSetting(@Nullable SettingItem lastChangedSetting) {
+        if (lastChangedSetting != null) {
+            Logger.d("TAG", "setLastChangedSetting: %s %s", lastChangedSetting.getTitle(getApplication()), ((BooleanSetting) lastChangedSetting).getValue());
+        }
+
         this.lastChangedSetting.setValue(lastChangedSetting);
     }
 }

@@ -20,7 +20,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.io.IOException;
+import java.util.List;
 
+import cz.johnyapps.eddiehostopky.settings.SettingIds;
+import cz.johnyapps.eddiehostopky.settings.SettingItem;
+import cz.johnyapps.eddiehostopky.settings.setting.BooleanSetting;
 import cz.johnyapps.eddiehostopky.tools.Logger;
 import cz.johnyapps.eddiehostopky.views.CountdownView;
 import cz.johnyapps.eddiehostopky.views.StopwatchView;
@@ -46,6 +50,7 @@ public class StopwatchFragment extends Fragment {
         setupViewModel();
         setupRoundCountdown(root);
         setupObservers(root);
+        setupMatchStopwatch(root);
 
         return root;
     }
@@ -80,6 +85,48 @@ public class StopwatchFragment extends Fragment {
         }
     }
 
+    private void stopAll(@NonNull View root) {
+        StopwatchView matchStopWatch = root.findViewById(R.id.matchStopWatch);
+        matchStopWatch.getStopwatchState().setRunning(false);
+
+        CountdownView roundCountdown = root.findViewById(R.id.roundCountdown);
+        roundCountdown.getStopwatchState().setRunning(false);
+
+        StopwatchView punishmentOneStopwatch = root.findViewById(R.id.punishmentOneStopwatch);
+        punishmentOneStopwatch.getStopwatchState().setRunning(false);
+
+        StopwatchView punishmentTwoStopWatch = root.findViewById(R.id.punishmentTwoStopWatch);
+        punishmentTwoStopWatch.getStopwatchState().setRunning(false);
+    }
+
+    private void setupMatchStopwatch(@NonNull View root) {
+        StopwatchView matchStopWatch = root.findViewById(R.id.matchStopWatch);
+        matchStopWatch.setOnRunningListener(running -> {
+            List<SettingItem> settings = viewModel.getSettings().getValue();
+            SettingItem ss = viewModel.getLastChangedSetting().getValue();
+
+            if (ss != null) {
+                Logger.d(TAG, "setupMatchStopwatch: %s %s", ss.getTitle(requireContext()), ((BooleanSetting) ss).getValue());
+            }
+
+            for (SettingItem settingItem : settings) {
+                if (settingItem.getId() == SettingIds.STOP_ALL_WHEN_GAME_STOPPED) {
+                    BooleanSetting booleanSetting = (BooleanSetting) settingItem;
+
+                    Logger.d(TAG, "setupMatchStopwatch: %s %s", booleanSetting.getValue() == null, booleanSetting.getValue());
+
+                    if (booleanSetting.getValue() == null || booleanSetting.getValue()) {
+                        if (!running) {
+                            stopAll(root);
+                        }
+                    }
+
+                    break;
+                }
+            }
+        });
+    }
+
     private void setupRoundCountdown(@NonNull View root) {
         CountdownView roundCountdown = root.findViewById(R.id.roundCountdown);
         roundCountdown.setOnCountdownCompleteListener(() -> {
@@ -100,7 +147,7 @@ public class StopwatchFragment extends Fragment {
     }
 
     private void setupViewModel() {
-        ViewModelProvider provider = new ViewModelProvider(this);
+        ViewModelProvider provider = new ViewModelProvider(requireActivity());
         viewModel = provider.get(MainViewModel.class);
     }
 

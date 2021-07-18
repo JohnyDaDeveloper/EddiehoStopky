@@ -18,6 +18,7 @@ import java.util.Locale;
 
 import cz.johnyapps.eddiehostopky.R;
 import cz.johnyapps.eddiehostopky.StopwatchState;
+import cz.johnyapps.eddiehostopky.tools.Logger;
 
 
 public class StopwatchView extends LinearLayout {
@@ -36,17 +37,13 @@ public class StopwatchView extends LinearLayout {
         @Override
         public void run() {
             if (stopwatchState.isRunning()) {
-                long hundredths = (stopwatchState.getRunningFor()) / 10;
-                long seconds = hundredths / 100;
-                long minutes = seconds / 60;
-                hundredths %= 100;
-                seconds %= 60;
-
-                timeTextView.setText(String.format(Locale.getDefault(), "%02d:%02d:%02d", minutes, seconds, hundredths));
+                drawFrame();
                 timeHandler.postDelayed(this, 0);
             }
         }
     };
+    @Nullable
+    private StopwatchState.OnRunningListener otherOnRunningListener;
     @NonNull
     private final StopwatchState.OnRunningListener onRunningListener = running -> {
         Drawable drawable;
@@ -65,6 +62,10 @@ public class StopwatchView extends LinearLayout {
         }
 
         startPauseStopwatchButton.setImageDrawable(drawable);
+
+        if (otherOnRunningListener != null) {
+            otherOnRunningListener.running(running);
+        }
     };
 
     public StopwatchView(Context context) {
@@ -117,6 +118,20 @@ public class StopwatchView extends LinearLayout {
         stopwatchState.setOnRunningListener(onRunningListener);
     }
 
+    protected long drawFrame() {
+        if (stopwatchState != null) {
+            long hundredths = (stopwatchState.getRunningFor()) / 10;
+            long seconds = hundredths / 100;
+            long minutes = seconds / 60;
+            hundredths %= 100;
+            seconds %= 60;
+
+            timeTextView.setText(String.format(Locale.getDefault(), "%02d:%02d:%02d", minutes, seconds, hundredths));
+        }
+
+        return 0;
+    }
+
     protected void startOrPause() {
         stopwatchState.startOrPause();
     }
@@ -139,6 +154,8 @@ public class StopwatchView extends LinearLayout {
 
         if (stopwatchState.isRunning()) {
             timeHandler.postDelayed(getRunnable(), 0);
+        } else {
+            drawFrame();
         }
     }
 
@@ -150,5 +167,9 @@ public class StopwatchView extends LinearLayout {
     @NonNull
     public Handler getTimeHandler() {
         return timeHandler;
+    }
+
+    public void setOnRunningListener(@Nullable StopwatchState.OnRunningListener onRunningListener) {
+        this.otherOnRunningListener = onRunningListener;
     }
 }

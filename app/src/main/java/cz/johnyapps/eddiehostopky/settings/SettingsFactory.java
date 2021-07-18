@@ -27,6 +27,7 @@ public class SettingsFactory {
 
     public List<SettingItem> load(@NonNull OnSettingItemChangedListener onSettingItemChangedListener) {
         boolean showAppreciation = generalPrefs.getBoolean(SharedPrefsNames.SHOW_APPRECIATION, true);
+        boolean stopAllWhenGameStopped = generalPrefs.getBoolean(SharedPrefsNames.STOP_ALL_WHEN_GAME_STOPPED, true);
 
         List<SettingItem> settings = new ArrayList<>();
         settings.add(new BooleanSetting(SettingIds.SHOW_APPRECIATION,
@@ -37,6 +38,16 @@ public class SettingsFactory {
                 setting -> {
                     generalPrefs.edit().putBoolean(SharedPrefsNames.SHOW_APPRECIATION,
                             simplify(setting.getValue(), showAppreciation)).apply();
+                    onSettingItemChangedListener.onChange(setting);
+                }));
+        settings.add(new BooleanSetting(SettingIds.STOP_ALL_WHEN_GAME_STOPPED,
+                R.string.settingStopAllWhenGameStopped,
+                stopAllWhenGameStopped,
+                R.string.yes,
+                R.string.no,
+                setting -> {
+                    generalPrefs.edit().putBoolean(SharedPrefsNames.STOP_ALL_WHEN_GAME_STOPPED,
+                            simplify(setting.getValue(), stopAllWhenGameStopped)).apply();
                     onSettingItemChangedListener.onChange(setting);
                 }));
 

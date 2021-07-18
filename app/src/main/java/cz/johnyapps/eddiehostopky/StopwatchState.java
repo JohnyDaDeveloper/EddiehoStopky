@@ -14,6 +14,12 @@ public class StopwatchState {
 
     }
 
+    public void setRunning(boolean running) {
+        if (running != this.running) {
+            startOrPause();
+        }
+    }
+
     public void startOrPause() {
         if (running) {
             running = false;
@@ -23,11 +29,6 @@ public class StopwatchState {
 
             if (startTime == -1) {
                 startTime = System.currentTimeMillis();
-            }
-
-            if (pauseTime != -1) {
-                startTime += System.currentTimeMillis() - pauseTime;
-                pauseTime = -1;
             }
         }
 
@@ -47,7 +48,12 @@ public class StopwatchState {
     }
 
     public long getRunningFor() {
-        return System.currentTimeMillis() - startTime;
+        if (pauseTime != -1) {
+            startTime += System.currentTimeMillis() - pauseTime;
+            pauseTime = running ? -1 : System.currentTimeMillis();
+        }
+
+        return startTime == -1 ? 0 : System.currentTimeMillis() - startTime;
     }
 
     public boolean isRunning() {
