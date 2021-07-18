@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Eddieho Stopky</string>
+    <string name="thanks">Děkujeme\nEddie</string>
+
+    <string name="fragment_stopwatch">Stopky</string>
+    <string name="fragment_settings">Nastavení</string>
+
+    <string name="stopwatchView_default">00:00:00</string>
+    <string name="countdownView_default">0s</string>
+    <string name="countdownView_time">%ss</string>
+
+    <string name="menuHeaderTitleTextView">Menu</string>
+    <string name="matchStopwatch_label">Zápas</string>
+    <string name="roundStopwatch_label">Útok</string>
+    <string name="punishmentOne_label">Trest 1</string>
+    <string name="punishmentTwo_label">Trest 2</string>
+
+    <string name="confirm">OK</string>
+    <string name="cancel">Zrušit</string>
+    <string name="yes">Ano</string>
+    <string name="no">Ne</string>
+    
+    <string name="settingShowAppreciation">Ukazovat poděkování</string>
+</resources>

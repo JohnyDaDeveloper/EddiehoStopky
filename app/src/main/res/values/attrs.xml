@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StopwatchView">
+        <attr name="label" format="string" />
+        <attr name="android:orientation" />
+    </declare-styleable>
+
+    <declare-styleable name="CountdownView">
+        <attr name="countFrom" format="integer" />
+    </declare-styleable>
+
+    <attr name="spacingDefault" format="dimension" />
+    <attr name="playPauseButtonColor" format="color" />
+    <attr name="restartButtonColor" format="color" />
+    <attr name="colorToolbar" format="color" />
+    <attr name="colorOnToolbar" format="color" />
+</resources>

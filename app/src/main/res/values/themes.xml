@@ -1,0 +1,35 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.EddiehoStopky" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="spacingDefault">20dp</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+
+        <item name="colorToolbar">?colorPrimary</item>
+        <item name="colorOnToolbar">?colorOnPrimary</item>
+        <item name="drawerArrowStyle">@style/Theme.EddiehoStopky.ArrowStyle</item>
+    </style>
+
+    <style name="Theme.EddiehoStopky.Default" parent="Theme.EddiehoStopky">
+        <item name="colorPrimary">@color/default_colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/default_colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/default_colorOnPrimary</item>
+
+        <item name="colorSecondary">@color/default_colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/default_colorSecondaryVariant</item>
+        <item name="colorOnSecondary">@color/default_colorOnSecondary</item>
+
+        <item name="playPauseButtonColor">@color/default_playPauseButtonColor</item>
+        <item name="restartButtonColor">@color/default_restartButtonColor</item>
+    </style>
+
+    <style name="Theme.EddiehoStopky.StopwatchTextView">
+        <item name="android:textSize">40sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingStart">?spacingDefault</item>
+        <item name="android:paddingEnd">?spacingDefault</item>
+        <item name="android:paddingBottom">?spacingDefault</item>
+    </style>
+
+    <style name="Theme.EddiehoStopky.ArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">?colorOnToolbar</item>
+    </style>
+</resources>

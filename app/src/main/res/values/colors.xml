@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="default_colorPrimary">#1D36BD</color>
+    <color name="default_colorPrimaryVariant">#112595</color>
+    <color name="default_colorOnPrimary">#FFFFFF</color>
+    <color name="default_colorSecondary">#950E0E</color>
+    <color name="default_colorSecondaryVariant">#700707</color>
+    <color name="default_colorOnSecondary">#FFFFFF</color>
+    <color name="default_playPauseButtonColor">#AB134DFD</color>
+    <color name="default_restartButtonColor">#ABCA0D0D</color>
+</resources>

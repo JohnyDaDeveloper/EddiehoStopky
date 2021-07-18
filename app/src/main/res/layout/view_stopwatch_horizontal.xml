@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/labelTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_toEndOf="@id/startPauseStopwatchButton"
+        android:layout_toStartOf="@id/restartStopwatchButton"
+        android:paddingStart="?spacingDefault"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:paddingEnd="?spacingDefault" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/timeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Theme.EddiehoStopky.StopwatchTextView"
+        android:layout_below="@id/labelTextView"
+        android:layout_toEndOf="@id/startPauseStopwatchButton"
+        android:layout_toStartOf="@id/restartStopwatchButton"
+        android:text="@string/stopwatchView_default" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/startPauseStopwatchButton"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/play"
+        android:padding="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/timeTextView"
+        android:background="?playPauseButtonColor" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/restartStopwatchButton"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        app:srcCompat="@drawable/restart"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@id/timeTextView"
+        android:background="?attr/restartButtonColor" />
+</RelativeLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="100dp"
+    android:padding="?spacingDefault"
+    android:background="?colorToolbar">
+
+    <TextView
+        android:id="@+id/menuHeaderTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:textStyle="bold"
+        android:textColor="?colorOnToolbar"
+        android:text="@string/menuHeaderTitleTextView" />
+</LinearLayout>

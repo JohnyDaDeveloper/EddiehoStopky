@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/labelTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:paddingStart="?spacingDefault"
+        android:paddingTop="?spacingDefault"
+        android:paddingEnd="?spacingDefault" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/timeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Theme.EddiehoStopky.StopwatchTextView"
+        android:text="@string/stopwatchView_default" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/startPauseStopwatchButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/play"
+            android:padding="10dp"
+            android:background="?playPauseButtonColor" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/restartStopwatchButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            app:srcCompat="@drawable/restart"
+            android:background="?attr/restartButtonColor" />
+    </LinearLayout>
+</LinearLayout>
