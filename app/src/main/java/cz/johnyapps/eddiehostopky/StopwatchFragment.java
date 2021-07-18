@@ -103,17 +103,10 @@ public class StopwatchFragment extends Fragment {
         StopwatchView matchStopWatch = root.findViewById(R.id.matchStopWatch);
         matchStopWatch.setOnRunningListener(running -> {
             List<SettingItem> settings = viewModel.getSettings().getValue();
-            SettingItem ss = viewModel.getLastChangedSetting().getValue();
-
-            if (ss != null) {
-                Logger.d(TAG, "setupMatchStopwatch: %s %s", ss.getTitle(requireContext()), ((BooleanSetting) ss).getValue());
-            }
 
             for (SettingItem settingItem : settings) {
                 if (settingItem.getId() == SettingIds.STOP_ALL_WHEN_GAME_STOPPED) {
                     BooleanSetting booleanSetting = (BooleanSetting) settingItem;
-
-                    Logger.d(TAG, "setupMatchStopwatch: %s %s", booleanSetting.getValue() == null, booleanSetting.getValue());
 
                     if (booleanSetting.getValue() == null || booleanSetting.getValue()) {
                         if (!running) {

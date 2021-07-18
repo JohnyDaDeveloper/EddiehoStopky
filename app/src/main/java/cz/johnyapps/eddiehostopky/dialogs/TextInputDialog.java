@@ -40,9 +40,8 @@ public class TextInputDialog {
                     assert valueEditText != null;
                     submitValue(valueEditText.getText().toString(), onConfirmListener);
                 })
-                .setNegativeButton(R.string.cancel, (dialog, which) ->  {
-                    SoftKeyboardUtils.hideKeyboard(((AlertDialog) dialog).getCurrentFocus());
-                });
+                .setNegativeButton(R.string.cancel, (dialog, which) ->
+                        SoftKeyboardUtils.hideKeyboard(((AlertDialog) dialog).getCurrentFocus()));
 
         dialog = builder.create();
         dialog.show();
