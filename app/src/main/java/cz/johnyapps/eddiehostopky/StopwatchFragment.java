@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,8 +33,9 @@ public class StopwatchFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         setupViewModel();
+        super.onCreate(savedInstanceState);
     }
 
     @Nullable
@@ -45,6 +48,12 @@ public class StopwatchFragment extends Fragment {
         setupObservers(root);
 
         return root;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.nav_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void playSound() {
