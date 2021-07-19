@@ -6,6 +6,7 @@ public class StopwatchState {
     private boolean running = false;
     private long startTime = -1;
     private long pauseTime = -1;
+    private boolean pausedByGameStopwatch = false;
 
     @Nullable
     private OnRunningListener onRunningListener;
@@ -14,8 +15,16 @@ public class StopwatchState {
 
     }
 
-    public void setRunning(boolean running) {
-        if (running != this.running) {
+    public void pause() {
+        if (running) {
+            pausedByGameStopwatch = true;
+            startOrPause();
+        }
+    }
+
+    public void resumeIfPaused() {
+        if (!running && pausedByGameStopwatch) {
+            pausedByGameStopwatch = false;
             startOrPause();
         }
     }

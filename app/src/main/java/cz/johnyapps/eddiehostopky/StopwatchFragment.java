@@ -101,16 +101,30 @@ public class StopwatchFragment extends Fragment {
 
     private void stopAll(@NonNull View root) {
         StopwatchView matchStopWatch = root.findViewById(R.id.matchStopWatch);
-        matchStopWatch.getStopwatchState().setRunning(false);
+        matchStopWatch.getStopwatchState().pause();
 
         CountdownView roundCountdown = root.findViewById(R.id.roundCountdown);
-        roundCountdown.getStopwatchState().setRunning(false);
+        roundCountdown.getStopwatchState().pause();
 
         StopwatchView punishmentOneStopwatch = root.findViewById(R.id.punishmentOneStopwatch);
-        punishmentOneStopwatch.getStopwatchState().setRunning(false);
+        punishmentOneStopwatch.getStopwatchState().pause();
 
         StopwatchView punishmentTwoStopWatch = root.findViewById(R.id.punishmentTwoStopWatch);
-        punishmentTwoStopWatch.getStopwatchState().setRunning(false);
+        punishmentTwoStopWatch.getStopwatchState().pause();
+    }
+
+    private void resumeAllPaused(@NonNull View root) {
+        StopwatchView matchStopWatch = root.findViewById(R.id.matchStopWatch);
+        matchStopWatch.getStopwatchState().resumeIfPaused();
+
+        CountdownView roundCountdown = root.findViewById(R.id.roundCountdown);
+        roundCountdown.getStopwatchState().resumeIfPaused();
+
+        StopwatchView punishmentOneStopwatch = root.findViewById(R.id.punishmentOneStopwatch);
+        punishmentOneStopwatch.getStopwatchState().resumeIfPaused();
+
+        StopwatchView punishmentTwoStopWatch = root.findViewById(R.id.punishmentTwoStopWatch);
+        punishmentTwoStopWatch.getStopwatchState().resumeIfPaused();
     }
 
     private void setupMatchStopwatch(@NonNull View root) {
@@ -123,7 +137,9 @@ public class StopwatchFragment extends Fragment {
                     BooleanSetting booleanSetting = (BooleanSetting) settingItem;
 
                     if (booleanSetting.getValue() == null || booleanSetting.getValue()) {
-                        if (!running) {
+                        if (running) {
+                            resumeAllPaused(root);
+                        } else {
                             stopAll(root);
                         }
                     }
@@ -189,6 +205,9 @@ public class StopwatchFragment extends Fragment {
             }
         });
         viewModel.getLastChangedSetting().observe(getViewLifecycleOwner(), settingItem -> {
+            Logger.i(TAG, "setupObservers: Setting changed: %s",
+                    settingItem == null ? "null" : settingItem.getTitle(root.getContext()));
+
             if (settingItem != null && settingItem.getId() == SettingIds.ALERT_BEFORE_ATTACK_END) {
                 IntegerSetting setting = (IntegerSetting) settingItem;
                 CountdownView roundCountdown = root.findViewById(R.id.roundCountdown);
