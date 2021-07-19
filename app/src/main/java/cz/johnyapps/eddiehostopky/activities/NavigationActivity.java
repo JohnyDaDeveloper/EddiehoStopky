@@ -1,5 +1,6 @@
 package cz.johnyapps.eddiehostopky.activities;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -59,6 +61,9 @@ public abstract class NavigationActivity extends AppCompatActivity {
     }
 
     private void setupToolbar() {
+        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.options_menu);
+        toolbar.setOverflowIcon(drawable);
+
         NavigationUI.setupWithNavController(toolbar, getNavController(), getAppBarConfiguration());
         setSupportActionBar(toolbar);
     }

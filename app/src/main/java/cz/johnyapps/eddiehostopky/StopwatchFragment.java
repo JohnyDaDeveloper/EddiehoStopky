@@ -1,10 +1,12 @@
 package cz.johnyapps.eddiehostopky;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
@@ -64,6 +66,12 @@ public class StopwatchFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.nav_menu, menu);
+
+        menu.findItem(R.id.ceskyLakrosMenuItem).setOnMenuItemClickListener(item -> {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(requireContext().getString(R.string.ceskyLakrosURL))));
+            return false;
+        });
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 

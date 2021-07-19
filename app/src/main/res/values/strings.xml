@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">Eddieho Stopky</string>
     <string name="thanks">Děkujeme\nEddie</string>
+    <string name="ceskyLakrosURL">http://www.ceskylakros.cz/</string>
 
     <string name="fragment_stopwatch">Stopky</string>
     <string name="fragment_settings">Nastavení</string>
+
+    <string name="ceskyLakrosMenuItem">www.ceskylakros.cz</string>
 
     <string name="stopwatchView_default">00:00:00</string>
     <string name="countdownView_default">0s</string>
