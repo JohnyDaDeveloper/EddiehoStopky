@@ -31,7 +31,8 @@ public class CountdownView extends StopwatchView {
                 if (remaining > 0) {
                     getTimeHandler().postDelayed(this, 1000);
                 } else if (onCountdownCompleteListener != null) {
-                    stopwatchState.startOrPause();
+                    stopwatchState.reset();
+                    drawFrame();
                 }
 
                 if (remaining == alertSecondsBeforeEnd) {
