@@ -4,9 +4,9 @@ import androidx.annotation.Nullable;
 
 public class StopwatchState {
     private boolean running = false;
+    private boolean pausedByGameStopwatch = false;
     private long startTime = -1;
     private long pauseTime = -1;
-    private boolean pausedByGameStopwatch = false;
 
     @Nullable
     private OnRunningListener onRunningListener;
@@ -48,6 +48,7 @@ public class StopwatchState {
 
     public void reset() {
         running = false;
+        pausedByGameStopwatch = false;
         startTime = -1;
         pauseTime = -1;
 
