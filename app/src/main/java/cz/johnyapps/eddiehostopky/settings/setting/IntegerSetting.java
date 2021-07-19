@@ -16,22 +16,29 @@ public class IntegerSetting extends Setting<Integer> {
     private static final String TAG = "IntegerSetting";
     private final int minValue;
     private final int maxValue;
+    @StringRes
+    private int textValueSuffix;
 
     public IntegerSetting(int id,
+                          @StringRes int titleId,
                           int minValue,
                           int maxValue,
-                          @StringRes int titleId,
-                          @Nullable Integer integer,
+                          @Nullable Integer value,
                           @Nullable OnSettingChangedListener<Integer> onSettingChangedListener) {
-        super(id, titleId, integer, onSettingChangedListener);
+        super(id, titleId, value, onSettingChangedListener);
         this.minValue = Math.min(minValue, maxValue);
         this.maxValue = Math.max(minValue, maxValue);
+    }
+
+    public IntegerSetting setTextValueSuffix(@StringRes int textValueSuffix) {
+        this.textValueSuffix = textValueSuffix;
+        return this;
     }
 
     @Nullable
     @Override
     public String valueToText(@Nullable Integer integer, @NonNull Context context) {
-        return String.valueOf(integer);
+        return integer + (textValueSuffix == 0 ? "" : context.getResources().getString(textValueSuffix));
     }
 
     @Override

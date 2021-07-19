@@ -14,6 +14,7 @@ public class CountdownView extends StopwatchView {
     private static final int COUNT_FROM_DEFAULT = 30;
 
     private long countFrom;
+    private long alertSecondsBeforeEnd = 0;
 
     @Nullable
     private OnCountdownCompleteListener onCountdownCompleteListener;
@@ -25,10 +26,15 @@ public class CountdownView extends StopwatchView {
             StopwatchState stopwatchState = getStopwatchState();
 
             if (stopwatchState.isRunning()) {
-                if (drawFrame() > 0) {
+                long remaining = drawFrame();
+
+                if (remaining > 0) {
                     getTimeHandler().postDelayed(this, 1000);
                 } else if (onCountdownCompleteListener != null) {
                     stopwatchState.startOrPause();
+                }
+
+                if (remaining == alertSecondsBeforeEnd) {
                     onCountdownCompleteListener.onComplete();
                 }
             }
@@ -105,5 +111,9 @@ public class CountdownView extends StopwatchView {
 
     public void setOnCountdownCompleteListener(@Nullable OnCountdownCompleteListener onCountdownCompleteListener) {
         this.onCountdownCompleteListener = onCountdownCompleteListener;
+    }
+
+    public void setAlertSecondsBeforeEnd(long alertSecondsBeforeEnd) {
+        this.alertSecondsBeforeEnd = alertSecondsBeforeEnd;
     }
 }

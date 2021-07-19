@@ -1,6 +1,7 @@
 package cz.johnyapps.eddiehostopky;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
@@ -24,8 +25,12 @@ import java.util.List;
 
 import cz.johnyapps.eddiehostopky.settings.SettingIds;
 import cz.johnyapps.eddiehostopky.settings.SettingItem;
+import cz.johnyapps.eddiehostopky.settings.SettingsFactory;
 import cz.johnyapps.eddiehostopky.settings.setting.BooleanSetting;
+import cz.johnyapps.eddiehostopky.settings.setting.IntegerSetting;
 import cz.johnyapps.eddiehostopky.tools.Logger;
+import cz.johnyapps.eddiehostopky.tools.SharedPrefsNames;
+import cz.johnyapps.eddiehostopky.tools.SharedPrefsUtils;
 import cz.johnyapps.eddiehostopky.views.CountdownView;
 import cz.johnyapps.eddiehostopky.views.StopwatchView;
 
@@ -34,6 +39,7 @@ public class StopwatchFragment extends Fragment {
     private static final int VIBRATION_LENGTH = 1000;
 
     private MainViewModel viewModel;
+    private SharedPreferences generalPrefs;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,8 +52,8 @@ public class StopwatchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_stopwatch, container, false);
+        generalPrefs = SharedPrefsUtils.getGeneralPrefs(root.getContext());
 
-        setupViewModel();
         setupRoundCountdown(root);
         setupObservers(root);
         setupMatchStopwatch(root);
@@ -122,6 +128,7 @@ public class StopwatchFragment extends Fragment {
 
     private void setupRoundCountdown(@NonNull View root) {
         CountdownView roundCountdown = root.findViewById(R.id.roundCountdown);
+        roundCountdown.setAlertSecondsBeforeEnd(generalPrefs.getInt(SharedPrefsNames.ALERT_BEFORE_ATTACK_END, 0));
         roundCountdown.setOnCountdownCompleteListener(() -> {
             Vibrator vibrator = (Vibrator) root.getContext().getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -131,11 +138,7 @@ public class StopwatchFragment extends Fragment {
                 vibrator.vibrate(VIBRATION_LENGTH);
             }
 
-            try {
-                playSound();
-            } catch (IllegalStateException e) {
-                Logger.w(TAG, "setupRoundCountdown: Failed to play sound", e);
-            }
+            playSound();
         });
     }
 
@@ -175,6 +178,13 @@ public class StopwatchFragment extends Fragment {
                 punishmentTwoStopWatch.setStopwatchState(stopwatchState);
             } else {
                 Logger.w(TAG, "setupObservers: Punishment two StopwatchState changed to null");
+            }
+        });
+        viewModel.getLastChangedSetting().observe(getViewLifecycleOwner(), settingItem -> {
+            if (settingItem != null && settingItem.getId() == SettingIds.ALERT_BEFORE_ATTACK_END) {
+                IntegerSetting setting = (IntegerSetting) settingItem;
+                CountdownView roundCountdown = root.findViewById(R.id.roundCountdown);
+                roundCountdown.setAlertSecondsBeforeEnd(SettingsFactory.simplify(setting.getValue(), 0));
             }
         });
     }
