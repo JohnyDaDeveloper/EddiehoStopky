@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
+import java.util.List;
+
 public abstract class SettingItem {
     private final int id;
     private final boolean isCategoryTitle;
@@ -39,5 +41,18 @@ public abstract class SettingItem {
     @NonNull
     public String getTitle(@NonNull Context context) {
         return context.getResources().getString(titleId);
+    }
+
+    @Nullable
+    public static SettingItem findSetting(@Nullable List<SettingItem> settings, int settingId) {
+        if (settings != null) {
+            for (SettingItem settingItem : settings) {
+                if (settingItem.getId() == settingId) {
+                    return settingItem;
+                }
+            }
+        }
+
+        return null;
     }
 }

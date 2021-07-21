@@ -17,19 +17,20 @@ public class StopwatchState {
 
     public void pause() {
         if (running) {
-            pausedByGameStopwatch = true;
             startOrPause();
+            pausedByGameStopwatch = true;
         }
     }
 
     public void resumeIfPaused() {
         if (!running && pausedByGameStopwatch) {
-            pausedByGameStopwatch = false;
             startOrPause();
         }
     }
 
     public void startOrPause() {
+        pausedByGameStopwatch = false;
+
         if (running) {
             running = false;
             pauseTime = System.currentTimeMillis();

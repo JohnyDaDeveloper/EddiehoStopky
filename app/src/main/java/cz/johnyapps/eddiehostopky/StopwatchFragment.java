@@ -29,7 +29,7 @@ import cz.johnyapps.eddiehostopky.settings.SettingIds;
 import cz.johnyapps.eddiehostopky.settings.SettingItem;
 import cz.johnyapps.eddiehostopky.settings.SettingsFactory;
 import cz.johnyapps.eddiehostopky.settings.setting.BooleanSetting;
-import cz.johnyapps.eddiehostopky.settings.setting.IntegerSetting;
+import cz.johnyapps.eddiehostopky.settings.setting.PlusMinusSetting;
 import cz.johnyapps.eddiehostopky.tools.Logger;
 import cz.johnyapps.eddiehostopky.tools.SharedPrefsNames;
 import cz.johnyapps.eddiehostopky.tools.SharedPrefsUtils;
@@ -131,20 +131,15 @@ public class StopwatchFragment extends Fragment {
         StopwatchView matchStopWatch = root.findViewById(R.id.matchStopWatch);
         matchStopWatch.setOnRunningListener(running -> {
             List<SettingItem> settings = viewModel.getSettings().getValue();
+            BooleanSetting booleanSetting = (BooleanSetting) SettingItem.findSetting(settings,
+                    SettingIds.STOP_ALL_WHEN_GAME_STOPPED);
 
-            for (SettingItem settingItem : settings) {
-                if (settingItem.getId() == SettingIds.STOP_ALL_WHEN_GAME_STOPPED) {
-                    BooleanSetting booleanSetting = (BooleanSetting) settingItem;
-
-                    if (booleanSetting.getValue() == null || booleanSetting.getValue()) {
-                        if (running) {
-                            resumeAllPaused(root);
-                        } else {
-                            stopAll(root);
-                        }
-                    }
-
-                    break;
+            if (booleanSetting != null &&
+                    (booleanSetting.getValue() == null || booleanSetting.getValue())) {
+                if (running) {
+                    resumeAllPaused(root);
+                } else {
+                    stopAll(root);
                 }
             }
         });
@@ -209,7 +204,7 @@ public class StopwatchFragment extends Fragment {
                     settingItem == null ? "null" : settingItem.getTitle(root.getContext()));
 
             if (settingItem != null && settingItem.getId() == SettingIds.ALERT_BEFORE_ATTACK_END) {
-                IntegerSetting setting = (IntegerSetting) settingItem;
+                PlusMinusSetting setting = (PlusMinusSetting) settingItem;
                 CountdownView roundCountdown = root.findViewById(R.id.roundCountdown);
                 roundCountdown.setAlertSecondsBeforeEnd(SettingsFactory.simplify(setting.getValue(), 0));
             }
