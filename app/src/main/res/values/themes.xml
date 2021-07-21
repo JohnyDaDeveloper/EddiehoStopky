@@ -6,6 +6,8 @@
         <item name="colorToolbar">?colorPrimary</item>
         <item name="colorOnToolbar">?colorOnPrimary</item>
         <item name="drawerArrowStyle">@style/Theme.EddiehoStopky.ArrowStyle</item>
+
+        <item name="overlapAnchor">false</item>
     </style>
 
     <style name="Theme.EddiehoStopky.Default" parent="Theme.EddiehoStopky">

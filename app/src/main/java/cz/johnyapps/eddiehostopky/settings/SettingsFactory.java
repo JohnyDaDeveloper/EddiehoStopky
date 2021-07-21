@@ -11,7 +11,7 @@ import java.util.List;
 
 import cz.johnyapps.eddiehostopky.R;
 import cz.johnyapps.eddiehostopky.settings.setting.BooleanSetting;
-import cz.johnyapps.eddiehostopky.settings.setting.IntegerSetting;
+import cz.johnyapps.eddiehostopky.settings.setting.PlusMinusSetting;
 import cz.johnyapps.eddiehostopky.tools.SharedPrefsNames;
 import cz.johnyapps.eddiehostopky.tools.SharedPrefsUtils;
 
@@ -52,11 +52,12 @@ public class SettingsFactory {
                             simplify(setting.getValue(), stopAllWhenGameStopped)).apply();
                     onSettingItemChangedListener.onChange(setting);
                 }));
-        settings.add(new IntegerSetting(SettingIds.ALERT_BEFORE_ATTACK_END,
+        settings.add(new PlusMinusSetting(SettingIds.ALERT_BEFORE_ATTACK_END,
                 R.string.settingAlertBeforeAttackEnd,
+                alertBeforeAttackEnd,
+                0,
                 0,
                 30,
-                alertBeforeAttackEnd,
                 setting -> {
                     generalPrefs.edit().putInt(SharedPrefsNames.ALERT_BEFORE_ATTACK_END,
                             simplify(setting.getValue(), alertBeforeAttackEnd)).apply();
