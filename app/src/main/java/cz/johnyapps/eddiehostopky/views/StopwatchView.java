@@ -18,11 +18,10 @@ import java.util.Locale;
 
 import cz.johnyapps.eddiehostopky.R;
 import cz.johnyapps.eddiehostopky.StopwatchState;
-import cz.johnyapps.eddiehostopky.tools.Logger;
-
 
 public class StopwatchView extends LinearLayout {
     private boolean vertical = true;
+    private boolean hideStartPauseButton = false;
 
     protected AppCompatTextView timeTextView;
     protected AppCompatImageView startPauseStopwatchButton;
@@ -67,6 +66,8 @@ public class StopwatchView extends LinearLayout {
             otherOnRunningListener.running(running);
         }
     };
+    @Nullable
+    private StopwatchState.OnRestartListener onRestartListener;
 
     public StopwatchView(Context context) {
         super(context);
@@ -111,6 +112,7 @@ public class StopwatchView extends LinearLayout {
 
         startPauseStopwatchButton = findViewById(R.id.startPauseStopwatchButton);
         startPauseStopwatchButton.setOnClickListener(v -> startOrPause());
+        startPauseStopwatchButton.setVisibility(hideStartPauseButton ? GONE : VISIBLE);
 
         restartStopwatchButton = findViewById(R.id.restartStopwatchButton);
         restartStopwatchButton.setOnClickListener(v -> reset());
@@ -136,7 +138,7 @@ public class StopwatchView extends LinearLayout {
         stopwatchState.startOrPause();
     }
 
-    protected void reset() {
+    public void reset() {
         stopwatchState.reset();
         timeTextView.setText(getResources().getString(R.string.stopwatchView_default));
         startPauseStopwatchButton.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.play, getContext().getTheme()));
@@ -151,6 +153,7 @@ public class StopwatchView extends LinearLayout {
         this.stopwatchState = stopwatchState;
 
         stopwatchState.setOnRunningListener(onRunningListener);
+        stopwatchState.setOnRestartListener(onRestartListener);
 
         if (stopwatchState.isRunning()) {
             timeHandler.postDelayed(getRunnable(), 0);
@@ -171,5 +174,25 @@ public class StopwatchView extends LinearLayout {
 
     public void setOnRunningListener(@Nullable StopwatchState.OnRunningListener onRunningListener) {
         this.otherOnRunningListener = onRunningListener;
+    }
+
+    public void setOnRestartListener(@Nullable StopwatchState.OnRestartListener onRestartListener) {
+        this.onRestartListener = onRestartListener;
+
+        if (stopwatchState != null) {
+            stopwatchState.setOnRestartListener(onRestartListener);
+        }
+    }
+
+    public void setHideStartPauseButton(boolean hideStartPauseButton) {
+        this.hideStartPauseButton = hideStartPauseButton;
+
+        if (startPauseStopwatchButton != null) {
+            startPauseStopwatchButton.setVisibility(hideStartPauseButton ? GONE : VISIBLE);
+        }
+    }
+
+    public boolean isHideStartPauseButton() {
+        return hideStartPauseButton;
     }
 }

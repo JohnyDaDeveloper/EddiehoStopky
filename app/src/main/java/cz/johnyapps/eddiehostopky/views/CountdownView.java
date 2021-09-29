@@ -95,7 +95,7 @@ public class CountdownView extends StopwatchView {
     }
 
     @Override
-    protected void reset() {
+    public void reset() {
         super.reset();
         timeTextView.setText(getResources().getString(R.string.countdownView_time, String.valueOf(countFrom)));
     }

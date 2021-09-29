@@ -21,6 +21,10 @@ public class SettingsFactory {
     @NonNull
     private final SharedPreferences generalPrefs;
 
+    public static final int ALERT_BEFORE_ATTACK_END_DEF = 5;
+    public static final int ALERT_BEFORE_ATTACK_END_MIN = 0;
+    public static final int ALERT_BEFORE_ATTACK_END_MAX = 30;
+
     public SettingsFactory(@NonNull Context context) {
         this.context = context;
         this.generalPrefs = SharedPrefsUtils.getGeneralPrefs(context);
@@ -29,7 +33,8 @@ public class SettingsFactory {
     public List<SettingItem> load(@NonNull OnSettingItemChangedListener onSettingItemChangedListener) {
         boolean showAppreciation = generalPrefs.getBoolean(SharedPrefsNames.SHOW_APPRECIATION, true);
         boolean stopAllWhenGameStopped = generalPrefs.getBoolean(SharedPrefsNames.STOP_ALL_WHEN_GAME_STOPPED, true);
-        int alertBeforeAttackEnd = generalPrefs.getInt(SharedPrefsNames.ALERT_BEFORE_ATTACK_END, 0);
+        int alertBeforeAttackEnd = generalPrefs.getInt(SharedPrefsNames.ALERT_BEFORE_ATTACK_END, ALERT_BEFORE_ATTACK_END_DEF);
+        boolean attackTimerAlwaysOn = generalPrefs.getBoolean(SharedPrefsNames.ATTACK_TIMER_ALWAYS_ON, false);
 
         List<SettingItem> settings = new ArrayList<>();
         settings.add(new BooleanSetting(SettingIds.SHOW_APPRECIATION,
@@ -52,12 +57,23 @@ public class SettingsFactory {
                             simplify(setting.getValue(), stopAllWhenGameStopped)).apply();
                     onSettingItemChangedListener.onChange(setting);
                 }));
+        settings.add(new BooleanSetting(SettingIds.ATTACK_TIMER_ALWAYS_ON,
+                R.string.settingAttackTimerAlwaysOn,
+                attackTimerAlwaysOn,
+                R.string.yes,
+                R.string.no,
+                setting -> {
+                    generalPrefs.edit().putBoolean(SharedPrefsNames.ATTACK_TIMER_ALWAYS_ON,
+                            simplify(setting.getValue(), attackTimerAlwaysOn)).apply();
+
+                    onSettingItemChangedListener.onChange(setting);
+                }));
         settings.add(new PlusMinusSetting(SettingIds.ALERT_BEFORE_ATTACK_END,
                 R.string.settingAlertBeforeAttackEnd,
                 alertBeforeAttackEnd,
-                0,
-                0,
-                30,
+                ALERT_BEFORE_ATTACK_END_DEF,
+                ALERT_BEFORE_ATTACK_END_MIN,
+                ALERT_BEFORE_ATTACK_END_MAX,
                 setting -> {
                     generalPrefs.edit().putInt(SharedPrefsNames.ALERT_BEFORE_ATTACK_END,
                             simplify(setting.getValue(), alertBeforeAttackEnd)).apply();

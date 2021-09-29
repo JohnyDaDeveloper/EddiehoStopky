@@ -29,4 +29,5 @@
     <string name="settingShowAppreciation">Ukazovat poděkování</string>
     <string name="settingStopAllWhenGameStopped">Zastavit vše při zastavení hry</string>
     <string name="settingAlertBeforeAttackEnd">Upozornit na konec útoku předem</string>
+    <string name="settingAttackTimerAlwaysOn">Časovač útoku řízen hrou</string>
 </resources>
