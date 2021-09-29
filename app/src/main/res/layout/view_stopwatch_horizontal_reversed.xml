@@ -8,8 +8,8 @@
         android:id="@+id/textLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/startPauseStopwatchButton"
-        android:layout_toStartOf="@id/restartStopwatchButton"
+        android:layout_toEndOf="@id/restartStopwatchButton"
+        android:layout_toStartOf="@id/startPauseStopwatchButton"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -37,7 +37,7 @@
         app:srcCompat="@drawable/play"
         android:padding="10dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignBottom="@+id/textLayout"
         android:background="?playPauseButtonColor" />
 
@@ -48,7 +48,7 @@
         android:padding="10dp"
         app:srcCompat="@drawable/restart"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_alignBottom="@id/textLayout"
         android:background="?attr/restartButtonColor" />
 </RelativeLayout>

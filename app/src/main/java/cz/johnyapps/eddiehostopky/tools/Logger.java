@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 
 public class Logger {
     @NonNull
-    private static final String PREFIX = "LOGGER: ";
+    private static final String PREFIX = "Logger: ";
 
     public static void v(@NonNull String TAG, @NonNull String message) {
         Log.v(PREFIX + TAG, message);

@@ -189,10 +189,19 @@ public class StopwatchFragment extends Fragment {
         });
 
         List<SettingItem> settings = viewModel.getSettings().getValue();
-        BooleanSetting booleanSetting = (BooleanSetting) SettingItem.findSetting(settings,
+        BooleanSetting attackTimerAlwaysOnSetting = (BooleanSetting) SettingItem.findSetting(settings,
                 SettingIds.ATTACK_TIMER_ALWAYS_ON);
-        if (booleanSetting != null) {
-            roundCountdown.setHideStartPauseButton(SettingsFactory.simplify(booleanSetting.getValue(), false));
+
+        if (attackTimerAlwaysOnSetting != null) {
+            roundCountdown.setHideStartPauseButton(SettingsFactory.simplify(attackTimerAlwaysOnSetting.getValue(), false));
+        }
+
+        BooleanSetting attackTimerResetOtherTimeSetting = (BooleanSetting) SettingItem.findSetting(settings,
+                SettingIds.ATTACK_TIMER_RESET_OTHER_SIDE);
+
+        if (attackTimerResetOtherTimeSetting != null) {
+            Logger.d(TAG, "setupRoundCountdown: %s", attackTimerResetOtherTimeSetting.getValue());
+            roundCountdown.setReversedButtons(SettingsFactory.simplify(attackTimerResetOtherTimeSetting.getValue(), false));
         }
     }
 
@@ -239,16 +248,21 @@ public class StopwatchFragment extends Fragment {
                     settingItem == null ? "null" : settingItem.getTitle(root.getContext()));
 
             if (settingItem != null) {
+                CountdownView roundCountdown = root.findViewById(R.id.roundCountdown);
+
                 if (settingItem.getId() == SettingIds.ALERT_BEFORE_ATTACK_END) {
                     PlusMinusSetting setting = (PlusMinusSetting) settingItem;
-                    CountdownView roundCountdown = root.findViewById(R.id.roundCountdown);
                     roundCountdown.setAlertSecondsBeforeEnd(SettingsFactory.simplify(setting.getValue(), 0));
                 }
 
                 if (settingItem.getId() == SettingIds.ATTACK_TIMER_ALWAYS_ON) {
                     BooleanSetting setting = (BooleanSetting) settingItem;
-                    CountdownView roundCountdown = root.findViewById(R.id.roundCountdown);
                     roundCountdown.setHideStartPauseButton(SettingsFactory.simplify(setting.getValue(), false));
+                }
+
+                if (settingItem.getId() == SettingIds.ATTACK_TIMER_RESET_OTHER_SIDE) {
+                    BooleanSetting setting = (BooleanSetting) settingItem;
+                    roundCountdown.setReversedButtons(SettingsFactory.simplify(setting.getValue(), false));
                 }
             }
         });

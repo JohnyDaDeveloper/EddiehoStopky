@@ -30,4 +30,5 @@
     <string name="settingStopAllWhenGameStopped">Zastavit vše při zastavení hry</string>
     <string name="settingAlertBeforeAttackEnd">Upozornit na konec útoku předem</string>
     <string name="settingAttackTimerAlwaysOn">Časovač útoku řízen hrou</string>
+    <string name="settingAttackTimerResetOtherSide">Tlačítko na restart útoku do leva</string>
 </resources>

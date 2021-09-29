@@ -35,6 +35,7 @@ public class SettingsFactory {
         boolean stopAllWhenGameStopped = generalPrefs.getBoolean(SharedPrefsNames.STOP_ALL_WHEN_GAME_STOPPED, true);
         int alertBeforeAttackEnd = generalPrefs.getInt(SharedPrefsNames.ALERT_BEFORE_ATTACK_END, ALERT_BEFORE_ATTACK_END_DEF);
         boolean attackTimerAlwaysOn = generalPrefs.getBoolean(SharedPrefsNames.ATTACK_TIMER_ALWAYS_ON, false);
+        boolean attackTimerResetOtherSide = generalPrefs.getBoolean(SharedPrefsNames.ATTACK_TIMER_RESET_OTHER_SIDE, false);
 
         List<SettingItem> settings = new ArrayList<>();
         settings.add(new BooleanSetting(SettingIds.SHOW_APPRECIATION,
@@ -65,6 +66,17 @@ public class SettingsFactory {
                 setting -> {
                     generalPrefs.edit().putBoolean(SharedPrefsNames.ATTACK_TIMER_ALWAYS_ON,
                             simplify(setting.getValue(), attackTimerAlwaysOn)).apply();
+
+                    onSettingItemChangedListener.onChange(setting);
+                }));
+        settings.add(new BooleanSetting(SettingIds.ATTACK_TIMER_RESET_OTHER_SIDE,
+                R.string.settingAttackTimerResetOtherSide,
+                attackTimerResetOtherSide,
+                R.string.yes,
+                R.string.no,
+                setting -> {
+                    generalPrefs.edit().putBoolean(SharedPrefsNames.ATTACK_TIMER_RESET_OTHER_SIDE,
+                            simplify(setting.getValue(), attackTimerResetOtherSide)).apply();
 
                     onSettingItemChangedListener.onChange(setting);
                 }));

@@ -2,11 +2,7 @@ package cz.johnyapps.eddiehostopky;
 
 import androidx.annotation.Nullable;
 
-import cz.johnyapps.eddiehostopky.tools.Logger;
-
 public class StopwatchState {
-    private static final String TAG = "StopwatchState";
-
     private boolean running = false;
     private boolean pausedByGameStopwatch = false;
     private long startTime = -1;

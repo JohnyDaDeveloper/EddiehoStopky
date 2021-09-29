@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,8 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.res.ResourcesCompat;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import cz.johnyapps.eddiehostopky.R;
@@ -22,6 +25,9 @@ import cz.johnyapps.eddiehostopky.StopwatchState;
 public class StopwatchView extends LinearLayout {
     private boolean vertical = true;
     private boolean hideStartPauseButton = false;
+    private boolean reversedButtons = false;
+    @NonNull
+    private String label = null;
 
     protected AppCompatTextView timeTextView;
     protected AppCompatImageView startPauseStopwatchButton;
@@ -85,8 +91,6 @@ public class StopwatchView extends LinearLayout {
     }
 
     public void init(@Nullable AttributeSet attrs, int theme) {
-        String label = null;
-
         if (attrs != null) {
             final TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.StopwatchView, theme, 0);
 
@@ -103,7 +107,6 @@ public class StopwatchView extends LinearLayout {
             LayoutInflater.from(getContext()).inflate(R.layout.view_stopwatch_horizontal, this, true);
         }
 
-
         AppCompatTextView labelTextView = findViewById(R.id.labelTextView);
         labelTextView.setText(label);
 
@@ -118,6 +121,10 @@ public class StopwatchView extends LinearLayout {
         restartStopwatchButton.setOnClickListener(v -> reset());
 
         stopwatchState.setOnRunningListener(onRunningListener);
+
+        if (reversedButtons) {
+            reverseLayout();
+        }
     }
 
     protected long drawFrame() {
@@ -194,5 +201,54 @@ public class StopwatchView extends LinearLayout {
 
     public boolean isHideStartPauseButton() {
         return hideStartPauseButton;
+    }
+
+    public void setReversedButtons(boolean reversedButtons) {
+        boolean prevValue = this.reversedButtons;
+        this.reversedButtons = reversedButtons;
+
+        if (prevValue != reversedButtons) {
+            reverseLayout();
+        }
+    }
+
+    private void reverseLayout() {
+        if (!vertical) {
+            removeAllViews();
+            if (reversedButtons) {
+                LayoutInflater.from(getContext()).inflate(R.layout.view_stopwatch_horizontal_reversed, this, true);
+            } else {
+                LayoutInflater.from(getContext()).inflate(R.layout.view_stopwatch_horizontal, this, true);
+            }
+
+            AppCompatTextView labelTextView = findViewById(R.id.labelTextView);
+            labelTextView.setText(label);
+
+            timeTextView = findViewById(R.id.timeTextView);
+            timeTextView.setText(getResources().getString(R.string.stopwatchView_default));
+
+            startPauseStopwatchButton = findViewById(R.id.startPauseStopwatchButton);
+            startPauseStopwatchButton.setOnClickListener(v -> startOrPause());
+            startPauseStopwatchButton.setVisibility(hideStartPauseButton ? GONE : VISIBLE);
+
+            restartStopwatchButton = findViewById(R.id.restartStopwatchButton);
+            restartStopwatchButton.setOnClickListener(v -> reset());
+        } else {
+            LinearLayout mainLayout = findViewById(R.id.buttonsLayout);
+
+            if (mainLayout != null) {
+                List<View> views = new ArrayList<>();
+
+                for (int i = 0; i < mainLayout.getChildCount(); i++) {
+                    views.add(mainLayout.getChildAt(0));
+                }
+
+                mainLayout.removeAllViews();
+
+                for (View view : views) {
+                    mainLayout.addView(view);
+                }
+            }
+        }
     }
 }
