@@ -147,7 +147,7 @@ public class StopwatchFragment extends Fragment {
             }
 
             if (attackTimerAlwaysOnSetting != null &&
-                    SettingsFactory.simplify(attackTimerAlwaysOnSetting.getValue(), false)) {
+                    SettingsFactory.simplify(attackTimerAlwaysOnSetting.getValue(), SettingsFactory.ATTACK_TIMER_ALWAYS_ON_DEF)) {
                 CountdownView roundCountdown = root.findViewById(R.id.roundCountdown);
 
                 if (running) {
@@ -193,7 +193,7 @@ public class StopwatchFragment extends Fragment {
                 SettingIds.ATTACK_TIMER_ALWAYS_ON);
 
         if (attackTimerAlwaysOnSetting != null) {
-            roundCountdown.setHideStartPauseButton(SettingsFactory.simplify(attackTimerAlwaysOnSetting.getValue(), false));
+            roundCountdown.setHideStartPauseButton(SettingsFactory.simplify(attackTimerAlwaysOnSetting.getValue(), SettingsFactory.ATTACK_TIMER_ALWAYS_ON_DEF));
         }
 
         BooleanSetting attackTimerResetOtherTimeSetting = (BooleanSetting) SettingItem.findSetting(settings,
@@ -201,7 +201,7 @@ public class StopwatchFragment extends Fragment {
 
         if (attackTimerResetOtherTimeSetting != null) {
             Logger.d(TAG, "setupRoundCountdown: %s", attackTimerResetOtherTimeSetting.getValue());
-            roundCountdown.setReversedButtons(SettingsFactory.simplify(attackTimerResetOtherTimeSetting.getValue(), false));
+            roundCountdown.setReversedButtons(SettingsFactory.simplify(attackTimerResetOtherTimeSetting.getValue(), SettingsFactory.ATTACK_TIMER_RESET_OTHER_SIDE_DEF));
         }
     }
 
@@ -252,17 +252,17 @@ public class StopwatchFragment extends Fragment {
 
                 if (settingItem.getId() == SettingIds.ALERT_BEFORE_ATTACK_END) {
                     PlusMinusSetting setting = (PlusMinusSetting) settingItem;
-                    roundCountdown.setAlertSecondsBeforeEnd(SettingsFactory.simplify(setting.getValue(), 0));
+                    roundCountdown.setAlertSecondsBeforeEnd(SettingsFactory.simplify(setting.getValue(), SettingsFactory.ALERT_BEFORE_ATTACK_END_DEF));
                 }
 
                 if (settingItem.getId() == SettingIds.ATTACK_TIMER_ALWAYS_ON) {
                     BooleanSetting setting = (BooleanSetting) settingItem;
-                    roundCountdown.setHideStartPauseButton(SettingsFactory.simplify(setting.getValue(), false));
+                    roundCountdown.setHideStartPauseButton(SettingsFactory.simplify(setting.getValue(), SettingsFactory.ATTACK_TIMER_ALWAYS_ON_DEF));
                 }
 
                 if (settingItem.getId() == SettingIds.ATTACK_TIMER_RESET_OTHER_SIDE) {
                     BooleanSetting setting = (BooleanSetting) settingItem;
-                    roundCountdown.setReversedButtons(SettingsFactory.simplify(setting.getValue(), false));
+                    roundCountdown.setReversedButtons(SettingsFactory.simplify(setting.getValue(), SettingsFactory.ATTACK_TIMER_RESET_OTHER_SIDE_DEF));
                 }
             }
         });
