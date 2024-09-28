@@ -37,7 +37,7 @@ public class PlusMinusDialog extends BaseDialog<Integer> {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
         builder.setTitle(title)
                 .setView(R.layout.dialog_plus_minus)
-                .setPositiveButton(R.string.ok, (dialog, which) -> onConfirmListener.onConfirm(this.value))
+                .setPositiveButton(R.string.confirm, (dialog, which) -> onConfirmListener.onConfirm(this.value))
                 .setNegativeButton(R.string.cancel, (dialog, which) -> {});
 
         AlertDialog alertDialog = builder.create();
